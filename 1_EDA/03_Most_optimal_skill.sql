@@ -1,0 +1,31 @@
+
+
+SELECT 
+    sd.skills,
+    ROUND(MEDIAN(jpf.salary_year_avg), 0) AS median_salary,
+    COUNT(jpf.*) AS demand_count,
+    ROUND(LN(COUNT(jpf.*)), 1) AS in_demand_count,
+    ROUND(
+        (MEDIAN(jpf.salary_year_avg) * LN(COUNT(jpf.*))) / 1000000,
+        2
+    ) AS optimal_score
+
+FROM job_postings_fact AS jpf
+
+JOIN skills_job_dim AS sjd
+    ON sjd.job_id = jpf.job_id
+
+JOIN skills_dim AS sd
+    ON sjd.skill_id = sd.skill_id
+
+WHERE jpf.job_title_short = 'Data Engineer'
+    AND jpf.job_work_from_home = TRUE
+    AND jpf.salary_year_avg IS NOT NULL
+
+GROUP BY sd.skills
+
+HAVING COUNT(jpf.*) > 100
+
+ORDER BY optimal_score DESC
+
+LIMIT 25;
