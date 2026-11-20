@@ -29,7 +29,7 @@ Job market analysts need to answer questions like:
 
 This project analyzes a **data warehouse** built using a star schema design. The warehouse consist of:
 
-![Data Warehouse](../Images\1_2_Data_Warehouse.png)
+![Data Warehouse](../Images/1_2_Data_Warehouse.png)
 
 --**Fact Table:**
 - `Company_dim` - Company information linked to job postings.
